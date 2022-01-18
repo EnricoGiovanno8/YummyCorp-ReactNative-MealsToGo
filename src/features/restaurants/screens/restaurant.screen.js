@@ -42,7 +42,7 @@ export const RestaurantsScreen = () => {
             <RestaurantInfoCard />
           </Spacer>
         )}
-        key={(item) => item.name}
+        keyExtractor={(item, index) => index.toString()}
       />
     </SafeArea>
   );
