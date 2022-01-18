@@ -17,15 +17,14 @@ import {
 } from "./restaurant-info-card.styles";
 
 export const RestaurantInfoCard = ({ restaurant = {} }) => {
-  console.log(restaurant);
-
+  const rating = 4
+  
   const { 
     name,
     icon,
     photos,
     vicinity,
     isOpenNow,
-    rating,
     isClosedTemporarily
   } = restaurant
 
