@@ -13,21 +13,21 @@ import {
   Rating,
   Section,
   SectionEnd,
-  Icon
+  Icon,
 } from "./restaurant-info-card.styles";
 
 export const RestaurantInfoCard = ({ restaurant = {} }) => {
-  const {
-    name = "Some Restaurant",
-    icon = "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
-    photos = [
-      "https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg",
-    ],
-    address = "100 some random street",
-    isOpenNow = true,
-    rating = 4,
-    isClosedTemporarily = true,
-  } = restaurant;
+  console.log(restaurant);
+
+  const { 
+    name,
+    icon,
+    photos,
+    vicinity,
+    isOpenNow,
+    rating,
+    isClosedTemporarily
+  } = restaurant
 
   const ratingArray = Array.from(new Array(Math.floor(rating)));
 
@@ -54,7 +54,7 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
             </Spacer>
           </SectionEnd>
         </Section>
-        <Address>{address}</Address>
+        <Address>{vicinity}</Address>
       </Info>
     </RestaurantCard>
   );
