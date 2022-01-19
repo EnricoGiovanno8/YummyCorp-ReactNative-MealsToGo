@@ -9,7 +9,7 @@ const RestaurantStack = createStackNavigator();
 
 export const RestaurantsNavigator = () => {
   return (
-    <RestaurantStack.Navigator screenOptions={{ headerShown: false, ...TransitionPresets.RevealFromBottomAndroid }}>
+    <RestaurantStack.Navigator screenOptions={{ headerShown: false, ...TransitionPresets.FadeFromBottomAndroid }}>
       <RestaurantStack.Screen
         name="Restaurants"
         component={RestaurantsScreen}
