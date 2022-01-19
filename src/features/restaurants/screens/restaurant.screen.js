@@ -5,7 +5,8 @@ import styled from "styled-components/native";
 import { Spacer } from "../../../components/spacer/spacer.component";
 import { SafeArea } from "../../../components/utility/safe-area.component";
 import { RestaurantsContext } from "../../../services/restaurants/restaurants.context";
-import { Search } from "../components/search.component"
+import { Search } from "../components/search.component";
+import { TouchableOpacity } from "react-native";
 
 const RestaurantList = styled.FlatList.attrs({
   contentContainerStyle: {
@@ -16,34 +17,34 @@ const RestaurantList = styled.FlatList.attrs({
 
 const Loading = styled(ActivityIndicator)`
   margin-left: -25px;
-`
+`;
 
 const LoadingContainer = styled.View`
   position: absolute;
   top: 50%;
   left: 50%;
-`
+`;
 
-export const RestaurantsScreen = () => {
+export const RestaurantsScreen = ({ navigation }) => {
   const { restaurants, isLoading } = useContext(RestaurantsContext);
   return (
     <SafeArea>
       <Search />
       {isLoading ? (
         <LoadingContainer>
-          <Loading
-            size={50}
-            animating={true}
-            color={Colors.blue300}
-          />
+          <Loading size={50} animating={true} color={Colors.blue300} />
         </LoadingContainer>
       ) : (
         <RestaurantList
           data={restaurants}
           renderItem={({ item }) => (
-            <Spacer position="bottom" size="large">
-              <RestaurantInfoCard restaurant={item} />
-            </Spacer>
+            <TouchableOpacity
+              onPress={() => navigation.push("RestaurantDetail", { restaurant: item })}
+            >
+              <Spacer position="bottom" size="large">
+                <RestaurantInfoCard restaurant={item} />
+              </Spacer>
+            </TouchableOpacity>
           )}
           keyExtractor={(item, index) => index.toString()}
         />
