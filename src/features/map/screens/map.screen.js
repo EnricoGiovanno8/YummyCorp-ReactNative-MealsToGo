@@ -13,7 +13,7 @@ const Map = styled(MapView)`
 
 export const MapScreen = () => {
   const { location } = useContext(LocationContext);
-  const { restaurant = [] } = useContext(RestaurantsContext);
+  const { restaurants = [] } = useContext(RestaurantsContext);
 
   const [latDelta, setLatDelta] = useState(0);
 
@@ -31,12 +31,27 @@ export const MapScreen = () => {
       <Search />
       <Map
         region={{
-            latitude: lat,
-            longitude: lng,
-            latitudeDelta: latDelta,
-            longitudeDelta: 0.02
+          latitude: lat,
+          longitude: lng,
+          latitudeDelta: latDelta,
+          longitudeDelta: 0.02,
         }}
-      ></Map>
+      >
+        {restaurants.map((restaurant) => {
+          return (
+            <MapView.Marker
+              key={restaurant.name}
+              title={restaurant.name}
+              coordinate={{
+                latitude: restaurant.geometry.location.lat,
+                longitude: restaurant.geometry.location.lng,
+              }}
+            >
+
+            </MapView.Marker>
+          );
+        })}
+      </Map>
     </>
   );
 };
