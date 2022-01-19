@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
+import { TouchableOpacity } from "react-native";
 import { ActivityIndicator, Colors } from "react-native-paper";
-import { RestaurantInfoCard } from "../components/restaurant-info-card.component";
 import styled from "styled-components/native";
+
+import { RestaurantInfoCard } from "../components/restaurant-info-card.component";
 import { Spacer } from "../../../components/spacer/spacer.component";
 import { SafeArea } from "../../../components/utility/safe-area.component";
 import { RestaurantsContext } from "../../../services/restaurants/restaurants.context";
 import { Search } from "../components/search.component";
-import { TouchableOpacity } from "react-native";
 
 const RestaurantList = styled.FlatList.attrs({
   contentContainerStyle: {
@@ -27,6 +28,7 @@ const LoadingContainer = styled.View`
 
 export const RestaurantsScreen = ({ navigation }) => {
   const { restaurants, isLoading } = useContext(RestaurantsContext);
+
   return (
     <SafeArea>
       <Search />
@@ -39,7 +41,9 @@ export const RestaurantsScreen = ({ navigation }) => {
           data={restaurants}
           renderItem={({ item }) => (
             <TouchableOpacity
-              onPress={() => navigation.push("RestaurantDetail", { restaurant: item })}
+              onPress={() =>
+                navigation.push("RestaurantDetail", { restaurant: item })
+              }
             >
               <Spacer position="bottom" size="large">
                 <RestaurantInfoCard restaurant={item} />

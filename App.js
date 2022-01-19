@@ -7,9 +7,10 @@ import {
   Oswald_400Regular,
 } from "@expo-google-fonts/oswald";
 import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
+import { Navigation } from "./src/infrastructure/navigation";
 import { LocationContextProvider } from "./src/services/location/location.context";
 import { RestaurantsContextProvider } from "./src/services/restaurants/restaurants.context";
-import { Navigation } from "./src/infrastructure/navigation";
+import { FavouritesContextProvider } from "./src/services/favourites/favourites.context";
 
 export default function App() {
   const [oswaldLoaded] = useOswald({
@@ -29,7 +30,9 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <LocationContextProvider>
           <RestaurantsContextProvider>
-            <Navigation />
+            <FavouritesContextProvider>
+              <Navigation />
+            </FavouritesContextProvider>
           </RestaurantsContextProvider>
         </LocationContextProvider>
       </ThemeProvider>
