@@ -21,24 +21,22 @@ export const RestaurantsContextProvider = ({ children }) => {
 
   const retrieveRestaurants = (loc) => {
     setIsLoading(true);
-    setRestaurants([])
-    setTimeout(() => {
-      restaurantsRequest(loc)
-        .then(restaurantsTransform)
-        .then((transformedResults) => {
-          setRestaurants(transformedResults);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          setError(err);
-          setIsLoading(false);
-        });
-    }, 2000);
+    setRestaurants([]);
+    restaurantsRequest(loc)
+      .then(restaurantsTransform)
+      .then((transformedResults) => {
+        setRestaurants(transformedResults);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError(err);
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
     if (location) {
-      const locationString = `${location.lat},${location.lng}`
+      const locationString = `${location.lat},${location.lng}`;
       retrieveRestaurants(locationString);
     }
   }, [location]);
