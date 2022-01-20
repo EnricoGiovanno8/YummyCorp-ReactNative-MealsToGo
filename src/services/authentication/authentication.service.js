@@ -24,5 +24,13 @@ initializeApp(firebaseConfig);
 const auth = getAuth();
 
 export const loginRequest = (email, password) => {
-  signInWithEmailAndPassword(auth, email, password);
+  return new Promise((resolve, reject) => [
+    signInWithEmailAndPassword(auth, email, password)
+      .then((u) => {
+        resolve(u)
+      })
+      .catch((e) => {
+        reject(e)
+      })
+  ])
 };
