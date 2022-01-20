@@ -19,12 +19,10 @@ export const AuthenticationContextProvider = ({ children }) => {
     setIsLoading(true);
     keepLogin()
       .then((usr) => {
-        console.log("ada user")
         setUser(usr);
         setIsLoading(false);
       })
       .catch(() => {
-        console.log("tidak ada user")
         setIsLoading(false);
       });
   }, []);
