@@ -3,6 +3,8 @@ import {
   getAuth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 
 import {
@@ -47,6 +49,30 @@ export const registerRequest = (email, password) => {
       })
       .catch((e) => {
         reject(e.code);
+      });
+  });
+};
+
+export const keepLogin = () => {
+  return new Promise((resolve, reject) => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        resolve(user);
+      } else {
+        reject(user);
+      }
+    });
+  });
+};
+
+export const logout = () => {
+  return new Promise((resolve, reject) => {
+    signOut(auth)
+      .then(() => {
+        resolve("Sign Out Success");
+      })
+      .catch(() => {
+        reject("Sign Out Fail");
       });
   });
 };

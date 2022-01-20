@@ -1,6 +1,11 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 
-import { loginRequest, registerRequest } from "./authentication.service";
+import {
+  loginRequest,
+  registerRequest,
+  keepLogin,
+  logout,
+} from "./authentication.service";
 
 export const AuthenticationContext = createContext();
 
@@ -9,6 +14,20 @@ export const AuthenticationContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [errorLogin, setErrorLogin] = useState(null);
   const [errorRegister, setErrorRegister] = useState(null);
+
+  useEffect(() => {
+    setIsLoading(true);
+    keepLogin()
+      .then((usr) => {
+        console.log("ada user")
+        setUser(usr);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        console.log("tidak ada user")
+        setIsLoading(false);
+      });
+  }, []);
 
   const onLogin = (email, password) => {
     setIsLoading(true);
@@ -55,6 +74,17 @@ export const AuthenticationContextProvider = ({ children }) => {
       });
   };
 
+  const onLogout = () => {
+    setUser(null);
+    logout()
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <AuthenticationContext.Provider
       value={{
@@ -65,6 +95,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         errorRegister,
         onLogin,
         onRegister,
+        onLogout,
       }}
     >
       {children}
