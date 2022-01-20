@@ -17,7 +17,7 @@ import {
 export const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { onLogin, error } = useContext(AuthenticationContext);
+  const { onLogin, errorLogin } = useContext(AuthenticationContext);
   return (
     <AccountBackground>
       <AccountCover />
@@ -38,13 +38,12 @@ export const LoginScreen = ({ navigation }) => {
             textContentType="password"
             secureTextEntry
             autoCapitalize="none"
-            secure
             onChangeText={(p) => setPassword(p)}
           />
         </Spacer>
-        {error && (
+        {errorLogin && (
           <ErrorContainer>
-            <Text variant="error">{error}</Text>
+            <Text variant="error">{errorLogin}</Text>
           </ErrorContainer>
         )}
         <Spacer position="top" size="large">

@@ -1,13 +1,14 @@
 import React, { useState, createContext } from "react";
 
-import { loginRequest } from "./authentication.service";
+import { loginRequest, registerRequest } from "./authentication.service";
 
 export const AuthenticationContext = createContext();
 
 export const AuthenticationContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(null);
-  const [error, setError] = useState(null);
+  const [errorLogin, setErrorLogin] = useState(null);
+  const [errorRegister, setErrorRegister] = useState(null);
 
   const onLogin = (email, password) => {
     setIsLoading(true);
@@ -32,7 +33,24 @@ export const AuthenticationContextProvider = ({ children }) => {
           errMessage =
             "Error: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.";
         }
-        setError(errMessage);
+        setErrorLogin(errMessage);
+        setIsLoading(false);
+      });
+  };
+
+  const onRegister = (email, password, repeatedPassword) => {
+    setIsLoading(true);
+    if (password !== repeatedPassword) {
+      setErrorRegister("Error: Passwords do not match.");
+      return setIsLoading(false);
+    }
+    registerRequest(email, password)
+      .then((u) => {
+        setUser(u);
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        setErrorRegister(e);
         setIsLoading(false);
       });
   };
@@ -43,8 +61,10 @@ export const AuthenticationContextProvider = ({ children }) => {
         user,
         isLoading,
         isAuthenticated: !!user,
-        error,
+        errorLogin,
+        errorRegister,
         onLogin,
+        onRegister,
       }}
     >
       {children}

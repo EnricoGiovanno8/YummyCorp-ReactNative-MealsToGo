@@ -1,5 +1,9 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 
 import {
   API_KEY,
@@ -24,13 +28,25 @@ initializeApp(firebaseConfig);
 const auth = getAuth();
 
 export const loginRequest = (email, password) => {
-  return new Promise((resolve, reject) => [
+  return new Promise((resolve, reject) => {
     signInWithEmailAndPassword(auth, email, password)
       .then((u) => {
-        resolve(u)
+        resolve(u.user);
       })
       .catch((e) => {
-        reject(e)
+        reject(e);
+      });
+  });
+};
+
+export const registerRequest = (email, password) => {
+  return new Promise((resolve, reject) => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((u) => {
+        resolve(u.user);
       })
-  ])
+      .catch((e) => {
+        reject(e.code);
+      });
+  });
 };
